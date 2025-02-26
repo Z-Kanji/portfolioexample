@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journalism Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2d3142;
+            --secondary-color: #4f5d75;
+            --accent-color: #ef8354;
+            --light-color: #f7f7f9;
+            --dark-color: #1a1a1a;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: var(--primary-color);
+            background-color: var(--light-color);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: white;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(45, 49, 66, 0.8), rgba(45, 49, 66, 0.8)), url('/api/placeholder/1400/800') center/cover no-repeat;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 15px auto 0;
+        }
+        
+        .bio-img {
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .bio-content h3 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .portfolio-filter {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            background-color: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            margin: 0 5px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .portfolio-item {
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .portfolio-img {
+            transition: transform 0.5s;
+        }
+        
+        .portfolio-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.05);
+        }
+        
+        .portfolio-item:hover .portfolio-info {
+            transform: translateY(0);
+        }
+        
+        .portfolio-info h4 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .portfolio-info p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .article-card {
+            border: none;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .article-card-body {
+            padding: 20px;
+        }
+        
+        .article-date {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .contact-icon {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-right: 15px;
+            min-width: 25px;
+        }
+        
+        .social-icons {
+            margin-top: 30px;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .contact-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-control {
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        footer p {
+            margin: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Your Name</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Your Name</h1>
+            <p>Journalist | Photographer | Videographer</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-white">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="row align-items-center">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <img src="/api/placeholder/600/600" alt="Your Name" class="img-fluid bio-img">
+                </div>
+                <div class="col-md-7 bio-content">
+                    <h3>Hello, I'm Your Name</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus. Curabitur aliquet quam id dui posuere blandit.</p>
+                    <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Nulla porttitor accumsan tincidunt. Vivamus suscipit tortor eget felis porttitor volutpat.</p>
+                    <p>Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla quis lorem ut libero malesuada feugiat. Cras ultricies ligula sed magna dictum porta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <div class="container">
+            <h2 class="section-title">My Work</h2>
+            
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="writing">Writing</button>
+                <button class="filter-btn" data-filter="photography">Photography</button>
+                <button class="filter-btn" data-filter="video">Video</button>
+            </div>
+            
+            <div class="portfolio-items">
+                <!-- Photography Items -->
+                <div class="row photography-items" id="photography">
+                    <h3 class="col-12 mb-4">Photography</h3>
+                    
+                    <div class="col-md-4 portfolio-item photography">
+                        <div class="portfolio-img">
+                            <img src="/api/placeholder/600/400" alt="Photography Project 1" class="img-fluid">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Photography Project 1</h4>
+                            <p>Short description of the project</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 portfolio-item photography">
+                        <div class="portfolio-img">
+                            <img src="/api/placeholder/600/400" alt="Photography Project 2" class="img-fluid">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Photography Project 2</h4>
+                            <p>Short description of the project</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 portfolio-item photography">
+                        <div class="portfolio-img">
+                            <img src="/api/placeholder/600/400" alt="Photography Project 3" class="img-fluid">
+                        </div>
+                        <div class="portfolio-info">
+                            <h4>Photography Project 3</h4>
+                            <p>Short description of the project</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Items -->
+                <div class="row mt-5 video-items" id="video">
+                    <h3 class="col-12 mb-4">Video</h3>
+                    
+                    <div class="col-md-6">
+                        <div class="video-wrapper">
+                            <img src="/api/placeholder/600/400" alt="Video placeholder" class="img-fluid">
+                        </div>
+                        <h4>Video Project 1</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus.</p>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="video-wrapper">
+                            <img src="/api/placeholder/600/400" alt="Video placeholder" class="img-fluid">
+                        </div>
+                        <h4>Video Project 2</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus.</p>
+                    </div>
+                </div>
+                
+                <!-- Writing Items -->
+                <div class="row mt-5 writing-items" id="writing">
+                    <h3 class="col-12 mb-4">Writing</h3>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="article-card">
+                            <img src="/api/placeholder/600/300" alt="Article 1" class="img-fluid">
+                            <div class="article-card-body">
+                                <div class="article-date">June 15, 2024</div>
+                                <h4>Article Title 1</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus.</p>
+                                <a href="#" class="btn btn-sm btn-outline-secondary mt-2">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="article-card">
+                            <img src="/api/placeholder/600/300" alt="Article 2" class="img-fluid">
+                            <div class="article-card-body">
+                                <div class="article-date">May 22, 2024</div>
+                                <h4>Article Title 2</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus.</p>
+                                <a href="#" class="btn btn-sm btn-outline-secondary mt-2">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-4">
+                        <div class="article-card">
+                            <img src="/api/placeholder/600/300" alt="Article 3" class="img-fluid">
+                            <div class="article-card-body">
+                                <div class="article-date">April 10, 2024</div>
+                                <h4>Article Title 3</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor risus.</p>
+                                <a href="#" class="btn btn-sm btn-outline-secondary mt-2">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-white">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="row">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        <p>Feel free to reach out to me for collaborations, assignments, or just to say hello!</p>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <p>123 Journalism Street, City, Country</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p>your.email@example.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <p>+1 234 567 8900</p>
+                            </div>
+                        </div>
+                        
+                        <div class="social-icons">
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-7">
+                    <div class="contact-form">
+                        <h3>Send Me a Message</h3>
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" placeholder="Your Email" required>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Subject">
+                            <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                            <button type="submit" class="btn btn-submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const headerOffset = 70;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse.classList.contains('show')) {
+                        navbarCollapse.classList.remove('show');
+                    }
+                }
+            });
+        });
+        
+        // Portfolio filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const photographyItems = document.getElementById('photography');
+        const videoItems = document.getElementById('video');
+        const writingItems = document.getElementById('writing');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                // Show/hide sections based on filter
+                if (filter === 'all') {
+                    photographyItems.style.display = 'flex';
+                    videoItems.style.display = 'flex';
+                    writingItems.style.display = 'flex';
+                } else if (filter === 'photography') {
+                    photographyItems.style.display = 'flex';
+                    videoItems.style.display = 'none';
+                    writingItems.style.display = 'none';
+                } else if (filter === 'video') {
+                    photographyItems.style.display = 'none';
+                    videoItems.style.display = 'flex';
+                    writingItems.style.display = 'none';
+                } else if (filter === 'writing') {
+                    photographyItems.style.display = 'none';
+                    videoItems.style.display = 'none';
+                    writingItems.style.display = 'flex';
+                }
+            });
+        });
+        
+        // Form submission (replace with your own functionality)
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thanks for your message! This is a demo form - in a real portfolio, this would send your message.');
+        });
+        
+        // Navbar color change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(45, 49, 66, 0.95)';
+                navbar.style.padding = '10px 0';
+            } else {
+                navbar.style.backgroundColor = 'var(--primary-color)';
+                navbar.style.padding = '';
+            }
+        });
+    </script>
+</body>
+</html>
